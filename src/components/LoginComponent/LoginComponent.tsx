@@ -106,7 +106,7 @@ const handleLogin = (username, password) => {
                 title="Star Wars"
               />
             <CardHeader className={classes.header} title="Fan App">
-            
+              
             </CardHeader>
 
             <CardContent>

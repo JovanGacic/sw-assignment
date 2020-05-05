@@ -6,39 +6,34 @@ import { connect } from 'react-redux';
 import { Button } from '@material-ui/core';
 import { logoutUser } from '../../actions';
 
-import ResourcesComponent  from '../ResourcesComponent/ResourcesComponent';
-
-// const useStyles = makeStyles((theme: Theme) =>
-//   createStyles({
-//   }
-// );
-
+import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
 
 const HomeComponent = (props) => {
 
-// const {isAuthenticated} = props;
-//const classes = useStyles();
-
-const handleLogout = () => {
+    const handleLogout = () => {
         const { dispatch } = props;
-        dispatch(logoutUser()); 
-}
+        dispatch(logoutUser());
+    }
 
-
-    
     return (
         <div>
-            <Button onClick={handleLogout}>Logout</Button>
+            <div style={{backgroundColor:'#3f51b5', marginBottom:"1%"}}>
+                <Button
+                    variant="text"
+                    size="large"
+                    color="default"
+                    onClick={handleLogout}>Logout</Button>
+            </div>
+            <h1>Star Wars Fan App</h1>
             <ResourcesComponent />
         </div>
     )
- }
+}
 
-
- function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         isAuthenticated: state.auth.isAuthenticated,
     }
-  }
-  
-  export default connect(mapStateToProps)(HomeComponent);
+}
+
+export default connect(mapStateToProps)(HomeComponent);

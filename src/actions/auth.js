@@ -15,7 +15,12 @@ export const FETCH_RESOURCES_SUCCESS = 'FETCH_RESOURCES_SUCCESS';
 export const FETCH_RESOURCES_ERROR = 'FETCH_RESOURCES_ERROR';
 
 export const FETCH_SPECIFIC_RESOURCE_REQUEST = 'FETCH_SPECIFIC_RESOURCE_REQUEST';
-export const FETCH_SPECIFIC_RESOURCE_SUCCESS = 'FETCH_SPECIFIC_RESOURCE_SUCCESS';
+export const FETCH_STARSHIPS_SUCCESS = 'FETCH_STARSHIPS_SUCCESS';
+export const FETCH_PEOPLE_SUCCESS = 'FETCH_PEOPLE_SUCCESS';
+export const FETCH_FILMS_SUCCESS = 'FETCH_FILMS_SUCCESS';
+export const FETCH_VEHICLES_SUCCESS = 'FETCH_VEHICLES_SUCCESS';
+export const FETCH_PLANETS_SUCCESS = 'FETCH_PLANETS_SUCCESS';
+export const FETCH_SPECIES_SUCCESS = 'FETCH_SPECIES_SUCCESS';
 
 const requestLogin = () => {
     return {
@@ -83,9 +88,45 @@ const fetchSpecificResourceRequest = () => {
 }
 
 
-const fetchSpecificResourceSuccess = () => {
+const fetchStarshipsSuccess = (data) => {
     return {
-        type: FETCH_SPECIFIC_RESOURCE_SUCCESS
+        type: FETCH_STARSHIPS_SUCCESS,
+        data
+    }
+}
+
+const fetchPeopleSuccess = (data) => {
+    return {
+        type: FETCH_PEOPLE_SUCCESS,
+        data
+    }
+}
+
+const fetchPlanetsSuccess = (data) => {
+    return {
+        type: FETCH_PLANETS_SUCCESS,
+        data
+    }
+}
+
+const fetchSpeciesSuccess = (data) => {
+    return {
+        type: FETCH_SPECIES_SUCCESS,
+        data
+    }
+}
+
+const fetchVehiclesSuccess = (data) => {
+    return {
+        type: FETCH_VEHICLES_SUCCESS,
+        data
+    }
+}
+
+const fetchFilmsSuccess = (data) => {
+    return {
+        type: FETCH_FILMS_SUCCESS,
+        data
     }
 }
 
@@ -125,7 +166,6 @@ function logout(username, password) {
         localStorage.setItem('loggedIn',false);
         localStorage.setItem('username','');
         setTimeout( () => {
-           
             resolve();
         }, 1000)
     })
@@ -143,33 +183,72 @@ export const fetchResources = () => dispatch => {
       'Content-Type': 'application/json',
         }
     })
-    .then(res => dispatch(fetchResourcesSuccess(res.data)))
+    .then(res => { 
+        dispatch(fetchResourcesSuccess(res.data));
+        Object.keys(res.data).map((key) => {
+           // console.log(key);
+            fetchData(key)
+            .then(data => {
+                if (key === 'starships')
+                 dispatch(fetchStarshipsSuccess(data));
+                else if (key === 'people')
+                 dispatch(fetchPeopleSuccess(data));
+                 else if (key === 'vehicles')
+                 dispatch(fetchVehiclesSuccess(data));
+                 else if (key === 'species')
+                 dispatch(fetchSpeciesSuccess(data));
+                 else if (key === 'planets')
+                 dispatch(fetchPlanetsSuccess(data));
+                 else if (key === 'films')
+                 dispatch(fetchFilmsSuccess(data));
+                
+            })
+            .catch(err =>{
+                console.log(err);
+            });
+            
+           
+        })
+    })  
     .catch(err => dispatch(fetchResourcesError('There was an error while fetching resources!' + err)));
 }
 
-export const fetchSpecificResource = () => dispatch => {
-    dispatch(fetchSpecificResourceRequest());
-    fetchData();
+// export const fetchSpecificResource = (resource) => dispatch => {
+//     dispatch(fetchSpecificResourceRequest());
+//     fetchData(resource);
     
-}
+// }
 
-async function fetchData() {
+async function fetchData(resource) {
     let data;
     let allData = [];
     let morePagesAvailable = true;
     let currentPage = 0;
-  
+    
      while(morePagesAvailable) {
       currentPage++;
-      const response = await axios.get(`http://swapi.dev/api/people/?page=${currentPage}`)
+      const response = await axios.get(`http://swapi.dev/api/${resource}/?page=${currentPage}`)
     //   let { data, total_pages } = await response.json();
       data = await response.data;
-      allData.push(data.results);
+      data.results.forEach(element => {
+        allData.push(element);    
+      });
+      
     //   data.forEach(e => allData.unshift(e));
       if (data.next === null)
        morePagesAvailable = false;
     //   morePagesAvailable = currentPage < total_pages;
      }
-    console.log(allData);
-    return allData;
+    return new Promise((resolve, reject) => {
+        if( allData != []) {
+            //resources[resource].push(allData);
+       // console.log(allData);
+        resolve(allData);
+        }
+        else {
+            console.log('err');
+            reject("There was an error while fetching resources!");
+        } 
+    })
+    //return allData;
   }
