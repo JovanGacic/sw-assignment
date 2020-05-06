@@ -17,7 +17,7 @@ const HomeComponent = (props) => {
 
     return (
         <div>
-            <div style={{backgroundColor:'#3f51b5', marginBottom:"1%"}}>
+            <div>
                 <Button
                     variant="text"
                     size="large"

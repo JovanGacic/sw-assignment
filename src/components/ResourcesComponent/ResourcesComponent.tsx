@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 
 const ResourcesComponent = (props) => {
 
-  const { people, planets, films, species, vehicles, starships,
+  let { people, planets, films, species, vehicles, starships,
     resources
   } = props;
 
@@ -71,6 +71,8 @@ const ResourcesComponent = (props) => {
   useEffect(() => {
     getResources();
   }, []);
+
+  people = searchString ? people.filter(a => a.name.includes(searchString)) : people
 
   return (
     <div className={classes.container}>

@@ -14,7 +14,7 @@ import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles({
     table: {
-      minWidth: 650
+      minWidth: 850
     },
   });
   
@@ -24,7 +24,7 @@ const DetailComponent = (props) => {
     const classes = useStyles();
 
     return (
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <Dialog maxWidth="xl" open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
              <DialogTitle id="form-dialog-title">{element.name !== undefined ? element.name : element.title}</DialogTitle>
              <DialogContent>
              <TableContainer component={Paper}>
@@ -35,7 +35,7 @@ const DetailComponent = (props) => {
                         <TableCell component="th" scope="row">
                         {key}
                         </TableCell>
-                        <TableCell align="right">{element[key]}</TableCell>
+                        <TableCell align="right"><b>{element[key]}</b></TableCell>
                     </TableRow>
                     ))}
                 </TableBody>

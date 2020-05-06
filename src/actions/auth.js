@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { getData } from './utils';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -147,12 +146,8 @@ export const loginUser = (username, password) => dispatch => {
 function login(username, password) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            // var success = (username === 'skywalker96@gmail.com' && password === 'heismyfather');
-            // success ? resolve : reject();
             var didSucceed = (username === 'skywalker96@gmail.com' && password === 'heismyfather');
-
             didSucceed ? resolve(true) : reject("These aren't the droids you're looking for...also, wrong username or password.");
-
         }, 2000)
     })
 }
@@ -181,78 +176,72 @@ export const authUser = () => dispatch => {
 
 export const fetchResources = () => dispatch => {
     dispatch(fetchResourcesRequest());
-    axios.get('https://swapi.dev/api', {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
+    axios.get('https://cors-anywhere.herokuapp.com/https://swapi.dev/api', {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
         }
-    })
-    .then(res => { 
-        dispatch(fetchResourcesSuccess(res.data));
-        Object.keys(res.data).map((key) => {
-           // console.log(key);
-            fetchData(key)
-            .then(data => {
-                if (key === 'starships')
-                 dispatch(fetchStarshipsSuccess(data));
-                else if (key === 'people')
-                 dispatch(fetchPeopleSuccess(data));
-                 else if (key === 'vehicles')
-                 dispatch(fetchVehiclesSuccess(data));
-                 else if (key === 'species')
-                 dispatch(fetchSpeciesSuccess(data));
-                 else if (key === 'planets')
-                 dispatch(fetchPlanetsSuccess(data));
-                 else if (key === 'films')
-                 dispatch(fetchFilmsSuccess(data));
-                
-            })
-            .catch(err =>{
-                console.log(err);
-            });
-            
-           
-        })
-    })  
-    .catch(err => dispatch(fetchResourcesError('There was an error while fetching resources!' + err)));
-}
+    }
+    )
+        .then(res => {
+            dispatch(fetchResourcesSuccess(res.data));
+            Object.keys(res.data).map((key) => {
+                fetchData(key)
+                    .then(data => {
+                        if (key === 'starships')
+                            dispatch(fetchStarshipsSuccess(data));
+                        else if (key === 'people')
+                            dispatch(fetchPeopleSuccess(data));
+                        else if (key === 'vehicles')
+                            dispatch(fetchVehiclesSuccess(data));
+                        else if (key === 'species')
+                            dispatch(fetchSpeciesSuccess(data));
+                        else if (key === 'planets')
+                            dispatch(fetchPlanetsSuccess(data));
+                        else if (key === 'films')
+                            dispatch(fetchFilmsSuccess(data));
 
-// export const fetchSpecificResource = (resource) => dispatch => {
-//     dispatch(fetchSpecificResourceRequest());
-//     fetchData(resource);
-    
-// }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+
+
+            })
+        })
+        .catch(err => dispatch(fetchResourcesError('There was an error while fetching resources!' + err)));
+}
 
 async function fetchData(resource) {
     let data;
     let allData = [];
     let morePagesAvailable = true;
     let currentPage = 0;
-    
-     while(morePagesAvailable) {
-      currentPage++;
-      const response = await axios.get(`http://swapi.dev/api/${resource}/?page=${currentPage}`)
-    //   let { data, total_pages } = await response.json();
-      data = await response.data;
-      data.results.forEach(element => {
-        allData.push(element);    
-      });
-      
-    //   data.forEach(e => allData.unshift(e));
-      if (data.next === null)
-       morePagesAvailable = false;
-    //   morePagesAvailable = currentPage < total_pages;
-     }
+
+    while (morePagesAvailable) {
+        currentPage++;
+        const response = await axios.get(`https://cors-anywhere.herokuapp.com/http://swapi.dev/api/${resource}/?page=${currentPage}`, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+            }
+        }
+        )
+        data = await response.data;
+        data.results.forEach(element => {
+            allData.push(element);
+        });
+
+        if (data.next === null)
+            morePagesAvailable = false;
+    }
     return new Promise((resolve, reject) => {
-        if( allData != []) {
-            //resources[resource].push(allData);
-       // console.log(allData);
-        resolve(allData);
+        if (allData != []) {
+            resolve(allData);
         }
         else {
             console.log('err');
             reject("There was an error while fetching resources!");
-        } 
+        }
     })
-    //return allData;
-  }
+}
