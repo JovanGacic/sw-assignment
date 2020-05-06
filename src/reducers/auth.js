@@ -68,23 +68,6 @@ export default (
                 isAuthenticated: true,
                 username: localStorage.getItem('username'),
             }
-        // case FETCH_RESOURCES_REQUEST:
-        //     return {
-        //         ...state
-        //     }
-        // case FETCH_RESOURCES_SUCCESS:
-        //     return {
-        //         ...state,
-        //         resources: action.resources
-        //     }
-        // case FETCH_SPECIFIC_RESOURCE_REQUEST: 
-        //     return {
-        //         ...state
-        //     }
-        // case FETCH_SPECIFIC_RESOURCE_SUCCESS:
-        //     return {
-        //         ...state
-        //     }
         default:
             return state;
     };

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getData } from './utils';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -133,24 +134,25 @@ const fetchFilmsSuccess = (data) => {
 export const loginUser = (username, password) => dispatch => {
     dispatch(requestLogin());
     login(username, password)
-      .then(() => {dispatch(receiveLogin(true,username))
-        localStorage.setItem('loggedIn',true);
-        localStorage.setItem('username',username);
-    })
-      .catch(err => 
-          dispatch(loginError(err)))        
+        .then(() => {
+            dispatch(receiveLogin(true, username))
+            localStorage.setItem('loggedIn', true);
+            localStorage.setItem('username', username);
+        })
+        .catch(err =>
+            dispatch(loginError(err)))
 };
 
 
 function login(username, password) {
-    return new Promise((resolve,reject) => {
-        setTimeout( () => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
             // var success = (username === 'skywalker96@gmail.com' && password === 'heismyfather');
             // success ? resolve : reject();
             var didSucceed = (username === 'skywalker96@gmail.com' && password === 'heismyfather');
-       
+
             didSucceed ? resolve(true) : reject("These aren't the droids you're looking for...also, wrong username or password.");
-            
+
         }, 2000)
     })
 }
@@ -158,14 +160,14 @@ function login(username, password) {
 export const logoutUser = () => dispatch => {
     dispatch(requestLogout());
     logout()
-     .then(dispatch(receiveLogout()))
+        .then(dispatch(receiveLogout()))
 }
 
 function logout(username, password) {
-    return new Promise((resolve,reject) => {
-        localStorage.setItem('loggedIn',false);
-        localStorage.setItem('username','');
-        setTimeout( () => {
+    return new Promise((resolve, reject) => {
+        localStorage.setItem('loggedIn', false);
+        localStorage.setItem('username', '');
+        setTimeout(() => {
             resolve();
         }, 1000)
     })
@@ -174,6 +176,8 @@ function logout(username, password) {
 export const authUser = () => dispatch => {
     dispatch(authenticateUser(localStorage.getItem('username')));
 }
+
+
 
 export const fetchResources = () => dispatch => {
     dispatch(fetchResourcesRequest());
