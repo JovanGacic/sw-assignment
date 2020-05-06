@@ -176,7 +176,7 @@ export const authUser = () => dispatch => {
 
 export const fetchResources = () => dispatch => {
     dispatch(fetchResourcesRequest());
-    axios.get('https://cors-anywhere.herokuapp.com/https://swapi.dev/api', {
+    axios.get('https://swapi.dev/api', {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
@@ -220,7 +220,7 @@ async function fetchData(resource) {
 
     while (morePagesAvailable) {
         currentPage++;
-        const response = await axios.get(`https://cors-anywhere.herokuapp.com/http://swapi.dev/api/${resource}/?page=${currentPage}`, {
+        const response = await axios.get(`http://swapi.dev/api/${resource}/?page=${currentPage}`, {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
