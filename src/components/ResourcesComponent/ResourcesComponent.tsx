@@ -8,12 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import { fetchResources } from '../../actions';
 
 import { RenderFilters } from '../Helper/Filters';
-import { RenderPeople } from '../Helper/People';
-import { RenderPlanets } from '../Helper/Planets';
-import { RenderFilms } from '../Helper/Films';
-import { RenderSpecies } from '../Helper/Species';
-import { RenderVehicles } from '../Helper/Vehicles';
-import { RenderStarships } from '../Helper/Starships';
+import { RenderResources } from '../Helper/RenderResources';
 import DetailComponent from '../DetailComponent/DetailComponent';
 
 const useStyles = makeStyles({
@@ -31,6 +26,11 @@ const useStyles = makeStyles({
   listContainer: {
     margin: 'auto',
     width: '50%'
+  },
+  form: {
+    '& > *': {
+      width: 200,
+    }
   }
 });
 
@@ -46,7 +46,7 @@ const ResourcesComponent = (props) => {
   const [element, setElement] = useState({});
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = (element, type) => {
+  const handleClickOpen = (element) => {
     setElement(element);
     setOpen(true);
   };
@@ -65,14 +65,14 @@ const ResourcesComponent = (props) => {
   }
 
   const handleSearch = () => {
-    console.log(searchString)
-  }
+
+   }
 
   useEffect(() => {
     getResources();
   }, []);
 
-  people = searchString ? people.filter(a => a.name.includes(searchString)) : people
+
 
   return (
     <div className={classes.container}>
@@ -83,32 +83,43 @@ const ResourcesComponent = (props) => {
         />
       </div>
 
-      <div className={classes.search}>
+      {/* <div className={classes.search}> */}
+      <form className={classes.form} noValidate autoComplete="off" onSubmit={(e) => { e.preventDefault(); }}>
         <TextField className={classes.searchField}
-          size="medium"
-          id="search"
-          label="Search"
-          placeholder="Type something here..."
-          margin="normal"
-          onBlur={(e) => handleSearchChange(e.target.value)}
-        >
-          {searchString}
-        </TextField>
-        <Button className={classes.searchBtn}
-          variant="contained"
-          size="small"
-          color="primary"
-          onClick={() => handleSearch()}>
-          Search
-                </Button>
-      </div>
+            size="medium"
+            id="search"
+            label="Search"
+            placeholder="Type something here..."
+            margin="normal"
+            onBlur={(e) => handleSearchChange(e.target.value)}
+          >
+            {/* {searchString} */}
+          </TextField>
+          <Button className={classes.searchBtn}
+            variant="contained"
+            size="small"
+            type="submit" 
+            color="primary"
+            //onClick={() => handleSearch()}
+            >
+            Search
+                  </Button>
+      </form>
+        
+      {/* </div> */}
       <div className={classes.listContainer}>
-        <RenderPeople people={people} resourceFilter={resourceFilter} handleClickOpen={handleClickOpen} />
+      <RenderResources data={people} resourceFilter={resourceFilter} handleClickOpen={handleClickOpen} searchString={searchString} type="people"/>  
+      <RenderResources data={planets} resourceFilter={resourceFilter} handleClickOpen={handleClickOpen} searchString={searchString} type="planets"/> 
+      <RenderResources data={films} resourceFilter={resourceFilter} handleClickOpen={handleClickOpen} searchString={searchString} type="films"/>  
+      <RenderResources data={species} resourceFilter={resourceFilter} handleClickOpen={handleClickOpen} searchString={searchString} type="species"/>  
+      <RenderResources data={vehicles} resourceFilter={resourceFilter} handleClickOpen={handleClickOpen} searchString={searchString} type="vehicles"/>  
+      <RenderResources data={starships} resourceFilter={resourceFilter} handleClickOpen={handleClickOpen} searchString={searchString} type="starships"/>  
+        {/* <RenderPeople people={people} resourceFilter={resourceFilter} handleClickOpen={handleClickOpen} searchString={searchString} /> 
         <RenderPlanets planets={planets} resourceFilter={resourceFilter} handleClickOpen={handleClickOpen} />
         <RenderFilms films={films} resourceFilter={resourceFilter} handleClickOpen={handleClickOpen} />
         <RenderSpecies species={species} resourceFilter={resourceFilter} handleClickOpen={handleClickOpen} />
         <RenderVehicles vehicles={vehicles} resourceFilter={resourceFilter} handleClickOpen={handleClickOpen} />
-        <RenderStarships starships={starships} resourceFilter={resourceFilter} handleClickOpen={handleClickOpen} />
+        <RenderStarships starships={starships} resourceFilter={resourceFilter} handleClickOpen={handleClickOpen} />*/}
       </div>
       <DetailComponent element={element} open={open} handleClose={handleClose} />
     </div>

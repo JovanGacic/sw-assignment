@@ -176,13 +176,7 @@ export const authUser = () => dispatch => {
 
 export const fetchResources = () => dispatch => {
     dispatch(fetchResourcesRequest());
-    axios.get('https://swapi.dev/api', {
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json',
-        }
-    }
-    )
+    axios.get('http://localhost:5000/proxy?url=https://swapi.dev/api')
         .then(res => {
             dispatch(fetchResourcesSuccess(res.data));
             Object.keys(res.data).map((key) => {
@@ -205,8 +199,6 @@ export const fetchResources = () => dispatch => {
                     .catch(err => {
                         console.log(err);
                     });
-
-
             })
         })
         .catch(err => dispatch(fetchResourcesError('There was an error while fetching resources!' + err)));
@@ -220,12 +212,7 @@ async function fetchData(resource) {
 
     while (morePagesAvailable) {
         currentPage++;
-        const response = await axios.get(`http://swapi.dev/api/${resource}/?page=${currentPage}`, {
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json',
-            }
-        }
+        const response = await axios.get(`http://localhost:5000/proxy?url=https://swapi.dev/api/${resource}/?page=${currentPage}`
         )
         data = await response.data;
         data.results.forEach(element => {

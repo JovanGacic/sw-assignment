@@ -8,7 +8,6 @@ var corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
-/* GET home page. */
 router.get('/proxy', cors(corsOptions), async function(req, res, next) {
   //console.log(req.query.url)
   const x = await axios.get(req.query.url)
