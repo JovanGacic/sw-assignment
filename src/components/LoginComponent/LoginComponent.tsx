@@ -15,7 +15,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { loginUser } from '../../actions';
 import { authUser } from '../../actions';
 
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
@@ -45,7 +44,6 @@ const useStyles = makeStyles((theme: Theme) =>
     errorText: {
       color: 'red'
     }
-
   }),
 );
 
@@ -138,7 +136,6 @@ const LoginComponent = (props) => {
 function mapStateToProps(state) {
   return {
     isLoggingIn: state.auth.isLoggingIn,
-    // loginError: state.auth.loginError,
     isAuthenticated: state.auth.isAuthenticated,
     loginErrorMessage: state.auth.loginErrorMessage,
   };
