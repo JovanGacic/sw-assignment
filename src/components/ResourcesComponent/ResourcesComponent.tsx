@@ -19,12 +19,15 @@ const useStyles = makeStyles({
   search: {
     margin: 'auto',
     marginTop: '10px',
-    marginBottom: '10px'
+    marginBottom: '10px',
+    display: 'flex',
+    flexDirection: 'column', 
+    alignItems: 'center'
   },
   searchField: {
   },
   searchBtn: {
-    width: '30%'
+    width: '50%'
 
   },
   listContainer: {

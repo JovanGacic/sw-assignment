@@ -15,8 +15,10 @@ import Highlighter from "react-highlight-words";
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 850
+    minWidth: 650,
+    tableLayout: 'fixed'
   },
+
 });
 
 const DetailComponent = (props) => {
@@ -25,7 +27,7 @@ const DetailComponent = (props) => {
   const classes = useStyles();
 
   return (
-    <Dialog maxWidth="xl" open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+    <Dialog maxWidth="md" open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">{element.name !== undefined ? element.name : element.title}</DialogTitle>
       <DialogContent>
         <TableContainer component={Paper}>

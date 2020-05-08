@@ -60,3 +60,7 @@ code {
   flex-wrap: wrap;
   text-align: center;
 }
+
+td {
+  word-wrap: break-word;
+}
