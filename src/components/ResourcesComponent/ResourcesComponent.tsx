@@ -50,7 +50,7 @@ const ResourcesComponent = (props) => {
   const [resourceFilter, setResourceFilter] = useState(['people', 'starships', 'films', 'planets', 'species', 'vehicles']);
   const [searchString, setSearchString] = useState('');
   const [element, setElement] = useState({});
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = (element) => {
     setElement(element);
@@ -72,7 +72,7 @@ const ResourcesComponent = (props) => {
 
   useEffect(() => {
     getResources();
-  });
+  }, []);
 
   return (
     <div className={classes.container}>
@@ -91,9 +91,8 @@ const ResourcesComponent = (props) => {
           placeholder="Type something here..."
           margin="normal"
           inputRef={ref => inputRef = ref}
-          onChange={(e) => handleSearchChange(e.target.value)}
         >
-          {searchString}
+
         </TextField>
         <Button variant="contained"
           size="small"

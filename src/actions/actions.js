@@ -165,8 +165,6 @@ export const authUser = () => dispatch => {
     dispatch(authenticateUser(localStorage.getItem('username')));
 }
 
-
-
 export const fetchResources = () => dispatch => {
     dispatch(fetchResourcesRequest());
     axios.get('http://localhost:5000/proxy?url=https://swapi.dev/api')
