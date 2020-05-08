@@ -11,22 +11,22 @@ import HomeComponent from './components/HomeComponent/HomeComponent'
 import './App.css';
 
 function App(props) {
-  
+
   const { isAuthenticated } = props;
 
   return (
-    
+
     <div className="App">
       <Switch>
         <Route path='/login' exact component={LoginComponent} />
-        <PrivateRouteComponent isAuthenticated={isAuthenticated} path='/'  exact component={HomeComponent} />
+        <PrivateRouteComponent isAuthenticated={isAuthenticated} path='/' exact component={HomeComponent} />
         <Redirect to='/' />
       </Switch>
     </div>
   );
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
     isAuthenticated: state.auth.isAuthenticated,
   };

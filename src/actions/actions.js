@@ -171,7 +171,7 @@ export const fetchResources = () => dispatch => {
         .then(res => {
             dispatch(fetchResourcesSuccess(res.data));
             Object.keys(res.data).map((key) => {
-               return fetchData(key)
+                return fetchData(key)
                     .then(data => {
                         if (key === 'starships')
                             dispatch(fetchStarshipsSuccess(data));
@@ -185,9 +185,9 @@ export const fetchResources = () => dispatch => {
                             dispatch(fetchPlanetsSuccess(data));
                         else if (key === 'films')
                             dispatch(fetchFilmsSuccess(data));
-
                     })
-                    .catch(err => {fetchResourcesError('There was an error while fetching resources!' + err);
+                    .catch(err => {
+                        fetchResourcesError('There was an error while fetching resources!' + err);
                     });
             })
         })

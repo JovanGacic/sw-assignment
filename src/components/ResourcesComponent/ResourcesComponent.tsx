@@ -72,6 +72,7 @@ const ResourcesComponent = (props) => {
 
   useEffect(() => {
     getResources();
+    // eslint-disable-next-line
   }, []);
 
   return (

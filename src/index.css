@@ -13,4 +13,50 @@ code {
     monospace;
 }
 
+@media only screen and (max-width: 1000px) {
 
+  .title-switcher{
+    font-size: 0.75rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .title-and-button h2{
+    width: 100%;
+    text-align: center;
+
+  }
+  .title-and-button button{
+    margin: 0 auto;
+
+  }
+  .title-switcher{
+    font-size: 0.5rem;
+  }
+}
+
+.search-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.switcher-container{
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.switcher-container div{
+  max-width: 200px;
+}
+
+.title-and-button{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+}

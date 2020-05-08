@@ -1,11 +1,12 @@
-import { LOGIN_REQUEST,
-         LOGIN_SUCCESS,
-         LOGIN_FAILURE,
-         LOGOUT_REQUEST,
-         LOGOUT_SUCCESS,
-         LOGOUT_FAILURE,
-         AUTH_REQUEST_AND_SUCCESS
-        } from '../actions/';
+import {
+    LOGIN_REQUEST,
+    LOGIN_SUCCESS,
+    LOGIN_FAILURE,
+    LOGOUT_REQUEST,
+    LOGOUT_SUCCESS,
+    LOGOUT_FAILURE,
+    AUTH_REQUEST_AND_SUCCESS
+} from '../actions/';
 
 export default (
     state = {
@@ -16,7 +17,7 @@ export default (
         username: ''
     },
     action
-     ) => {
+) => {
     switch (action.type) {
         case LOGIN_REQUEST:
             return {

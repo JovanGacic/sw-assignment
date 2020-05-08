@@ -1,31 +1,21 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const useStyles = makeStyles({
-    btn: {
-       float: "right" 
-}
- });
-
 export const RenderResources = (props) => {
-
-  const classes = useStyles();
 
   let { data, resourceFilter, handleClickOpen, searchString, type } = props;
 
   const fuzzy = (obj) => {
-   const result = Object.keys(obj).some(key => {
-      if(!Array.isArray(obj[key]) && obj[key] !== null && obj[key].length < 600) {
-          //console.log(obj[key] || ''.toUpperCase());
-     return obj[key].toUpperCase().indexOf(searchString.toUpperCase()) > -1
-    } 
+    const result = Object.keys(obj).some(key => {
+      if (!Array.isArray(obj[key]) && obj[key] !== null && obj[key].length < 600) {
+        return obj[key].toUpperCase().indexOf(searchString.toUpperCase()) > -1
+      }
       else return false;
-  })
+    })
     return result;
   }
 
@@ -40,16 +30,16 @@ export const RenderResources = (props) => {
         data.map(element => {
           return (
             <Card key={element.name ? element.name : element.title} variant="outlined">
-              <CardContent>
+              <CardContent className="title-and-button">
                 <Typography variant="body2" component="h2" align="left">
                   {element.name ? element.name : element.title}
-                  <Button className={classes.btn} variant="contained"
-                    size="medium"
-                    color="primary"
-                    onClick={() => handleClickOpen(element)}>
-                    Details
-                </Button>
                 </Typography>
+                <Button variant="contained"
+                  size="medium"
+                  color="primary"
+                  onClick={() => handleClickOpen(element)}>
+                  Details
+                </Button>
               </CardContent>
             </Card>
           )

@@ -13,53 +13,51 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Highlighter from "react-highlight-words";
 
-
-
 const useStyles = makeStyles({
-    table: {
-      minWidth: 850
-    },
-  });
-  
+  table: {
+    minWidth: 850
+  },
+});
+
 const DetailComponent = (props) => {
 
-    const { open, element, handleClose, searchString} = props;
-    const classes = useStyles();
+  const { open, element, handleClose, searchString } = props;
+  const classes = useStyles();
 
-    return (
-        <Dialog maxWidth="xl" open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-             <DialogTitle id="form-dialog-title">{element.name !== undefined ? element.name : element.title}</DialogTitle>
-             <DialogContent>
-             <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
-                <TableBody>
-                    {Object.keys(element).map((key, index) => (
-                    <TableRow key={key}>
-                        <TableCell component="th" scope="row">
-                        {key}
-                        </TableCell>
-                        <TableCell align="right">
-                          <Highlighter
-                          highlightClassName="highlightclass"
-                          searchWords={[searchString]}
-                          autoEscape={true}
-                          textToHighlight={element[key].toString()}>
-                            
-                          </Highlighter>
-                        </TableCell>
-                    </TableRow>
-                    ))}
-                </TableBody>
-                </Table>
-            </TableContainer>    
-             </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                  Back
+  return (
+    <Dialog maxWidth="xl" open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <DialogTitle id="form-dialog-title">{element.name !== undefined ? element.name : element.title}</DialogTitle>
+      <DialogContent>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableBody>
+              {Object.keys(element).map((key, index) => (
+                <TableRow key={key}>
+                  <TableCell component="th" scope="row">
+                    {key}
+                  </TableCell>
+                  <TableCell align="right">
+                    <Highlighter
+                      highlightClassName="highlightclass"
+                      searchWords={[searchString]}
+                      autoEscape={true}
+                      textToHighlight={element[key].toString()}>
+
+                    </Highlighter>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} color="primary">
+          Back
                 </Button>
-            </DialogActions> 
-      </Dialog>
-    )
+      </DialogActions>
+    </Dialog>
+  )
 }
 
 export default DetailComponent;

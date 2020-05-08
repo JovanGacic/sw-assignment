@@ -4,13 +4,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import rootReducer from './reducers';
 
-export default function configureStore(persistedState){
+export default function configureStore(persistedState) {
     const store = createStore(
         rootReducer,
         persistedState,
         composeWithDevTools(
-        applyMiddleware(thunkMiddleware))
+            applyMiddleware(thunkMiddleware))
     );
-   
+
     return store;
 }
