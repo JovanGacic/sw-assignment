@@ -15,8 +15,8 @@ You're good to go!
 Summary
 
 To login into the app use the following credentials:
-Username > skywalker96@gmail.com,
-Password > heismyfather
+Username > *skywalker96@gmail.com*,
+Password > *heismyfather*
 (These credentials are hard-coded)
 
 After successful login you are redirected to the home page.
