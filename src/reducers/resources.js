@@ -19,7 +19,8 @@ state = {
     films: [],
     planets: [],
     species: [],
-    vehicles: []
+    vehicles: [],
+    fetchResourcesError: ''
  },
 action
  ) => {
@@ -67,6 +68,11 @@ action
            ...state,
            vehicles: action.data
        }
+    case FETCH_RESOURCES_ERROR:
+        return {
+            ...state,
+            fetchResourcesError: action.message
+        }
    default:
        return state;
 };

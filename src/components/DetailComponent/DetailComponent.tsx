@@ -11,6 +11,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Highlighter from "react-highlight-words";
+
+
 
 const useStyles = makeStyles({
     table: {
@@ -20,7 +23,7 @@ const useStyles = makeStyles({
   
 const DetailComponent = (props) => {
 
-    const { open, element, handleClose} = props;
+    const { open, element, handleClose, searchString} = props;
     const classes = useStyles();
 
     return (
@@ -35,7 +38,15 @@ const DetailComponent = (props) => {
                         <TableCell component="th" scope="row">
                         {key}
                         </TableCell>
-                        <TableCell align="right"><b>{element[key]}</b></TableCell>
+                        <TableCell align="right">
+                          <Highlighter
+                          highlightClassName="highlightclass"
+                          searchWords={[searchString]}
+                          autoEscape={true}
+                          textToHighlight={element[key].toString()}>
+                            
+                          </Highlighter>
+                        </TableCell>
                     </TableRow>
                     ))}
                 </TableBody>

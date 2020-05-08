@@ -1,11 +1,9 @@
 import React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-
 import { connect } from 'react-redux';
 
 import { Button } from '@material-ui/core';
-import { logoutUser } from '../../actions';
 
+import { logoutUser } from '../../actions';
 import ResourcesComponent from '../ResourcesComponent/ResourcesComponent';
 
 const HomeComponent = (props) => {

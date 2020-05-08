@@ -20,8 +20,8 @@ export const RenderResources = (props) => {
 
   const fuzzy = (obj) => {
    const result = Object.keys(obj).some(key => {
-      if(!Array.isArray(obj[key])) {
-         // console.log(obj[key]);
+      if(!Array.isArray(obj[key]) && obj[key] !== null && obj[key].length < 600) {
+          //console.log(obj[key] || ''.toUpperCase());
      return obj[key].toUpperCase().indexOf(searchString.toUpperCase()) > -1
     } 
       else return false;
@@ -31,7 +31,7 @@ export const RenderResources = (props) => {
 
   data = searchString ? data.filter(a => (fuzzy(a))) : data
 
-  if (data.length === 0)
+  if (data.length === 0 && searchString === '')
     return <CircularProgress color='primary' size={24} />;
   return (
     <div>

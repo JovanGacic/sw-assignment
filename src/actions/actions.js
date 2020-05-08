@@ -81,13 +81,6 @@ const fetchResourcesError = message => {
     };
 };
 
-const fetchSpecificResourceRequest = () => {
-    return {
-        type: FETCH_SPECIFIC_RESOURCE_REQUEST
-    }
-}
-
-
 const fetchStarshipsSuccess = (data) => {
     return {
         type: FETCH_STARSHIPS_SUCCESS,
@@ -158,7 +151,7 @@ export const logoutUser = () => dispatch => {
         .then(dispatch(receiveLogout()))
 }
 
-function logout(username, password) {
+function logout() {
     return new Promise((resolve, reject) => {
         localStorage.setItem('loggedIn', false);
         localStorage.setItem('username', '');
@@ -180,7 +173,7 @@ export const fetchResources = () => dispatch => {
         .then(res => {
             dispatch(fetchResourcesSuccess(res.data));
             Object.keys(res.data).map((key) => {
-                fetchData(key)
+               return fetchData(key)
                     .then(data => {
                         if (key === 'starships')
                             dispatch(fetchStarshipsSuccess(data));
@@ -196,8 +189,7 @@ export const fetchResources = () => dispatch => {
                             dispatch(fetchFilmsSuccess(data));
 
                     })
-                    .catch(err => {
-                        console.log(err);
+                    .catch(err => {fetchResourcesError('There was an error while fetching resources!' + err);
                     });
             })
         })
@@ -223,11 +215,10 @@ async function fetchData(resource) {
             morePagesAvailable = false;
     }
     return new Promise((resolve, reject) => {
-        if (allData != []) {
+        if (allData !== []) {
             resolve(allData);
         }
         else {
-            console.log('err');
             reject("There was an error while fetching resources!");
         }
     })

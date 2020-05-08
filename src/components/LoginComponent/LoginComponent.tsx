@@ -32,18 +32,18 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       background: '#212121',
       color: '#fff',
-      
+
     },
     card: {
       marginTop: theme.spacing(10)
     },
     media: {
       height: '30px',
-      paddingTop: '56.25%', // 16:9
+      paddingTop: '56.25%',
       backgroundColor: 'rgba(0,0,0,1)'
     },
     errorText: {
-      color:'red'
+      color: 'red'
     }
 
   }),
@@ -54,116 +54,94 @@ const LoginComponent = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  // const [helperText, setHelperText] = useState('');
-  // const [error, setError] = useState(false);
-
-  // const history = useHistory();
   const handleAuth = useCallback(() => {
     const { dispatch } = props;
-    dispatch(authUser()); 
-  },[props]);
+    dispatch(authUser());
+  }, [props]);
 
-  const {isAuthenticated, isLoggingIn, loginErrorMessage} = props;
-  
+  const { isAuthenticated, isLoggingIn, loginErrorMessage } = props;
+
   useEffect(() => {
     if (username.trim() && password.trim()) {
       setIsButtonDisabled(false);
     } else {
       setIsButtonDisabled(true);
     }
-    if (!isAuthenticated && localStorage.getItem('loggedIn') === 'true'){
-        handleAuth();
+    if (!isAuthenticated && localStorage.getItem('loggedIn') === 'true') {
+      handleAuth();
     }
   }, [username, password, handleAuth, isAuthenticated]);
 
-const handleLogin = (username, password) => {
-    const {dispatch} = props;
-    dispatch(loginUser(username,password));
-}
-
-
-
-  // const handleKeyPress = (e:any) => {
-  //   if (e.keyCode === 13 || e.which === 13) {
-  //     isButtonDisabled || handleLogin();
-  //   }
-  // };
-
-  
+  const handleLogin = (username, password) => {
+    const { dispatch } = props;
+    dispatch(loginUser(username, password));
+  }
 
   if (isAuthenticated) {
     return <Redirect to="/" />
   }
-  else  
-      return (
-      
+  else
+    return (
       <React.Fragment>
         <form className={classes.container} noValidate autoComplete="off">
           <Card className={classes.card}>
-          <CardMedia
-                className={classes.media}
-                image={require("../../assets/star-wars-logo.png")}
-                title="Star Wars"
-              />
+            <CardMedia
+              className={classes.media}
+              image={require("../../assets/star-wars-logo.png")}
+              title="Star Wars"
+            />
             <CardHeader className={classes.header} title="Fan App">
-              
             </CardHeader>
-
             <CardContent>
               <div>
                 <TextField
-                 
                   fullWidth
                   id="username"
                   type="email"
                   label="Username"
                   placeholder="Username"
                   margin="normal"
-                  onChange={(e)=>setUsername(e.target.value)}
-                  // onKeyPress={(e)=>handleKeyPress(e)}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
                 <TextField
-                 
                   fullWidth
                   id="password"
                   type="password"
                   label="Password"
                   placeholder="Password"
                   margin="normal"
-                
-                  onChange={(e)=>setPassword(e.target.value)}
-                  // onKeyPress={(e)=>handleKeyPress(e)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className={classes.errorText}>
-                 {isLoggingIn ? null : loginErrorMessage }
+                {isLoggingIn ? null : loginErrorMessage}
               </div>
             </CardContent>
             <CardActions>
               <Button
                 variant="contained"
                 size="large"
-                color="secondary"
+                color="primary"
                 className={classes.loginBtn}
-                onClick={()=>handleLogin(username,password)}
+                onClick={() => handleLogin(username, password)}
                 disabled={isButtonDisabled}
-                >
-               {isLoggingIn ? <CircularProgress color="inherit" size={24}/> : 'Log in'}
+              >
+                {isLoggingIn ? <CircularProgress color="inherit" size={24} /> : 'Log in'}
               </Button>
             </CardActions>
           </Card>
         </form>
       </React.Fragment>
     );
-  }
+}
 
-  function mapStateToProps(state){
-    return {
-      isLoggingIn: state.auth.isLoggingIn,
-      // loginError: state.auth.loginError,
-      isAuthenticated: state.auth.isAuthenticated,
-      loginErrorMessage: state.auth.loginErrorMessage,
-    };
-  }
-  
-  export default connect(mapStateToProps)(LoginComponent);
+function mapStateToProps(state) {
+  return {
+    isLoggingIn: state.auth.isLoggingIn,
+    // loginError: state.auth.loginError,
+    isAuthenticated: state.auth.isAuthenticated,
+    loginErrorMessage: state.auth.loginErrorMessage,
+  };
+}
+
+export default connect(mapStateToProps)(LoginComponent);

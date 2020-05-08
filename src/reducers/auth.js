@@ -4,12 +4,7 @@ import { LOGIN_REQUEST,
          LOGOUT_REQUEST,
          LOGOUT_SUCCESS,
          LOGOUT_FAILURE,
-         AUTH_REQUEST_AND_SUCCESS,
-        //  FETCH_RESOURCES_REQUEST,
-        //  FETCH_RESOURCES_SUCCESS,
-        //  FETCH_RESOURCES_ERROR,
-        //  FETCH_SPECIFIC_RESOURCE_REQUEST,
-        //  FETCH_SPECIFIC_RESOURCE_SUCCESS
+         AUTH_REQUEST_AND_SUCCESS
         } from '../actions/';
 
 export default (
@@ -19,7 +14,6 @@ export default (
         logoutError: false,
         isAuthenticated: false,
         username: ''
-        // resources: {} 
     },
     action
      ) => {
